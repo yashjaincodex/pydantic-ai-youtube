@@ -21,17 +21,14 @@ async def chat_session():
     # history holds the full message list from all previous turns
     history = []
 
-    questions = [
-        "What is a Python decorator?",
-        "Can you show me a simple example?",
-        "How is that different from a closure?",  # relies on previous context!
-    ]
+    while True:
+        query = input("User: ")
+        if query == "quit" or query == "exit":
+            break
 
-    for q in questions:
-        print(f"\nUser: {q}")
         # Pass history so the agent remembers previous messages in this session
-        result = await agent.run(q, message_history=history)
-        print(f"Agent: {result.output}")
+        result = await agent.run(query, message_history=history)
+        print(f"Agent: {result.output}\n")
         # all_messages() returns ALL messages including this turn — save for next
         history = result.all_messages()
 

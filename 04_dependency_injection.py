@@ -40,7 +40,7 @@ support_agent = Agent(
 # RunContext[AppDeps] gives you type-safe access to the injected dependencies
 @support_agent.instructions
 def personalized_instructions(ctx: RunContext[AppDeps]) -> str:
-    return f"Always greet the user as '{ctx.deps.user_name}'. User ID: {ctx.deps.user_id}"
+    return f"Always greet the user name as '{ctx.deps.user_name}'. User ID: {ctx.deps.user_id}"
 
 
 # @agent.tool (not tool_plain) — this tool receives RunContext to access deps
@@ -61,9 +61,15 @@ deps = AppDeps(
     db_url="postgresql://localhost/mydb",
 )
 result = support_agent.run_sync(
-    "Where is my last order?",
+    "How many orders are delivered, provide order id, user name?",
     deps=deps,
 )
-print(result.output.answer)
-print(result.output.confidence)
+print(f"Answer: {result.output.answer}")
+print(f"Confidence: {result.output.confidence}")
 print(f"Escalate: {result.output.escalate_to_human}")
+
+# Prompt Structure:
+
+# You are a helpful customer support agent.
+# Always greet the user name as 'Yash'. User ID: 42 # instructions
+# How many orders are delivered, provide order id, user name?
