@@ -43,13 +43,13 @@ structured_agent = Agent(
 
 
 async def stream_structured():
-    async with structured_agent.run_stream("Write a blog post about Pydantic AI") as s:
+    async with structured_agent.run_stream("Write a blog post about Pydantic AI") as stream:
         # stream_output() replaces the deprecated stream()
         # debounce_by=0.05 batches updates every 50ms — avoids too many re-renders
-        async for partial in s.stream_output(debounce_by=0.05):
+        async for partial in stream.stream_output(debounce_by=0.05):
             print(f"\r[streaming] title={partial.title!r}", end="", flush=True)
         # get_output() returns the final fully validated BlogPost object
-        final = await s.get_output()
+        final = await stream.get_output()
         print(f"\n\nFinal title: {final.title}")
         print(f"Sections: {final.sections}")
 

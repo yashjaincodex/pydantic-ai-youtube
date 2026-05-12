@@ -49,6 +49,8 @@ orchestrator = Agent(
 async def research_topic(topic: str) -> str:
     """Research a topic and return a detailed summary."""
     result = await researcher.run(f"Research this topic in depth: {topic}")
+    print("=" * 60)
+    print(f"Ressearch: {result}")
     return result.output
 
 
@@ -56,6 +58,8 @@ async def research_topic(topic: str) -> str:
 async def write_article(research_summary: str) -> str:
     """Write a blog article from a research summary."""
     result = await writer.run(f"Write a blog post based on:\n{research_summary}")
+    print("=" * 60)
+    print(f"Writer: {result}")
     return result.output
 
 
@@ -63,12 +67,15 @@ async def write_article(research_summary: str) -> str:
 async def edit_article(draft: str) -> str:
     """Edit and polish an article draft."""
     result = await editor.run(f"Edit this draft:\n{draft}")
+    print("=" * 60)
+    print(f"Editor: {result}")
     return result.output
 
 
 async def main():
     result = await orchestrator.run("Create a complete article about Pydantic AI for Python developers")
     article = result.output
+    print("=" * 60)
     print(f"Title: {article.title}")
     print(f"Words: {article.word_count}")
     print(article.body[:500])
