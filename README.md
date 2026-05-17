@@ -15,7 +15,7 @@ To keep your AI projects clean and organized, it is recommended to use **conda e
 
 ## 🔗 **Download Miniforge for macOS (ARM64)**
 
-Download from the official repository:
+Download from the official repository:  
 https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh
 
 ---
