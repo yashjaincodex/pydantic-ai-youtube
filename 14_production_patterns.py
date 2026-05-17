@@ -4,7 +4,7 @@
 
 
 from dotenv import load_dotenv
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, Field, ValidationError
 from pydantic_ai import Agent
 from pydantic_ai.exceptions import UnexpectedModelBehavior, UsageLimitExceeded
 from pydantic_ai.models.fallback import FallbackModel
@@ -17,7 +17,7 @@ load_dotenv()
 class ExtractedData(BaseModel):
     name: str
     email: str
-    age: int
+    age: int = Field(lt=-1000, gt=1000)
 
 
 # FallbackModel tries models in order — if gpt-4o-mini fails (rate limit,
@@ -33,7 +33,7 @@ agent = Agent(
 
 # UsageLimits prevents runaway costs — raises UsageLimitExceeded if exceeded
 limits = UsageLimits(
-    request_limit=5,  # max 5 LLM requests per agent run
+    request_limit=2,  # max 2 LLM requests per agent run
     total_tokens_limit=10_000,  # max 10k tokens per agent run
 )
 
