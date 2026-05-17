@@ -38,7 +38,7 @@ agent = Agent(
 
 # logfire.span() creates a trace span — everything inside is grouped in the dashboard
 with logfire.span("analyze_customer_feedback"):
-    result = agent.run_sync("I absolutely love this product! Fast delivery and great quality.")
+    result = agent.run_sync("I absolutely hare this product! Slow delivery and bad quality.")
     # Log structured data alongside the trace for easy filtering in the dashboard
     logfire.info(
         "Analysis complete",

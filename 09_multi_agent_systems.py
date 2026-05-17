@@ -50,7 +50,7 @@ async def research_topic(topic: str) -> str:
     """Research a topic and return a detailed summary."""
     result = await researcher.run(f"Research this topic in depth: {topic}")
     print("=" * 60)
-    print(f"Ressearch: {result}")
+    print(f"Research: {result}")
     return result.output
 
 

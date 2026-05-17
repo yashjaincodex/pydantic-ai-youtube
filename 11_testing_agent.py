@@ -46,9 +46,6 @@ def test_weather_agent_custom():
     )  # '{"city": "Mumbai", "temperature": 32.5, "description": "Sunny"}'
     with agent.override(model=custom_model):
         result = agent.run_sync("Mumbai weather?")
-        print("+" * 30)
-        print(result.output)
-        print("+" * 30)
         assert result.output.city == "Mumbai"
         assert result.output.temperature == 32.5
 

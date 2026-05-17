@@ -28,6 +28,7 @@ class SummaryRequest(BaseModel):
     text: str
 
 
+# Pydantic Model for Agent
 class SummaryResponse(BaseModel):
     summary: str
     key_points: list[str]
@@ -66,11 +67,6 @@ async def summarize(req: SummaryRequest):
     # result.output is already a SummaryResponse — return it directly
     result = await summary_agent.run(req.text)
     return result.output
-
-
-@app.get("/health")
-def health():
-    return {"status": "ok"}
 
 
 # Run with: uvicorn video13_fastapi:app --reload

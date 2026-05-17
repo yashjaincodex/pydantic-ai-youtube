@@ -40,8 +40,8 @@ class ResearchNode(BaseNode[ResearchState]):
             "openai:gpt-4o-mini",
             instructions="Research topics thoroughly.",
         )
-        r = await agent.run(f"Research: {ctx.state.topic}")
-        ctx.state.research = r.output
+        result = await agent.run(f"Research: {ctx.state.topic}")
+        ctx.state.research = result.output
         print("Research end")
         return WriteNode()  # always proceeds to writing
 
@@ -55,8 +55,8 @@ class WriteNode(BaseNode[ResearchState]):
             "openai:gpt-4o-mini",
             instructions="Write clear articles.",
         )
-        r = await agent.run(f"Write article based on:\n{ctx.state.research}")
-        ctx.state.draft = r.output
+        result = await agent.run(f"Write article based on:\n{ctx.state.research}")
+        ctx.state.draft = result.output
         print("Writing end")
         return ReviewNode()  # always proceeds to review
 
@@ -71,10 +71,10 @@ class ReviewNode(BaseNode[ResearchState]):
             output_type=bool,
             instructions="Review articles. Return True if good, False if needs revision.",
         )
-        r = await agent.run(f"Is this article publication-ready?\n{ctx.state.draft}")
+        result = await agent.run(f"Is this article publication-ready?\n{ctx.state.draft}")
 
         # Stop if approved OR if we've already revised twice (avoid infinite loops)
-        if r.output or ctx.state.revision_count >= 2:
+        if result.output or ctx.state.revision_count >= 2:
             ctx.state.final = ctx.state.draft
             print("Review end")
             return End(ctx.state.final)  # End the graph, return the final article
@@ -89,7 +89,7 @@ class ReviewNode(BaseNode[ResearchState]):
 async def main():
     # Register all nodes with the graph
     graph = Graph(nodes=[ResearchNode, WriteNode, ReviewNode])
-    state = ResearchState(topic="Harry Potter books vs movies!")
+    state = ResearchState(topic="Harry Potter Books vs Movies!")
     # graph.run() returns a GraphRunResult
     # Access the final value from End() via result.output
     run_result = await graph.run(ResearchNode(), state=state)
