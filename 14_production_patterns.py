@@ -33,7 +33,7 @@ agent = Agent(
 
 # UsageLimits prevents runaway costs — raises UsageLimitExceeded if exceeded
 limits = UsageLimits(
-    request_limit=2,  # max 2 LLM requests per agent run
+    request_limit=5,  # max 5 LLM requests per agent run
     total_tokens_limit=10_000,  # max 10k tokens per agent run
 )
 
@@ -45,7 +45,7 @@ settings = ModelSettings(
 
 try:
     result = agent.run_sync(
-        "Contact: John Doe, john@example.com, age 28",
+        "Contact: Yash Jain, yash@gmail.com, age 28",
         usage_limits=limits,
         model_settings=settings,
     )
